@@ -1,0 +1,1066 @@
+# LINUX INTERVIEW NOTES FOR CLOUD ENGINEER
+
+1. LINUX BASICS
+
+---
+
+What is Linux?
+Linux is an open-source operating system based on the Linux kernel. It is widely used in cloud computing, servers, DevOps, containers, and networking.
+
+Why is Linux important for Cloud Engineers?
+
+* Most cloud servers run Linux.
+* AWS EC2 commonly uses Linux distributions.
+* Docker containers commonly use Linux.
+* DevOps tools such as Jenkins, Docker, Kubernetes and Ansible heavily use Linux.
+* Linux provides powerful command-line and automation capabilities.
+
+Common Linux distributions:
+
+* Ubuntu
+* Amazon Linux
+* Red Hat Enterprise Linux (RHEL)
+* CentOS / Rocky Linux / AlmaLinux
+* Debian
+* Fedora
+
+2. IMPORTANT LINUX DIRECTORY STRUCTURE
+
+---
+
+/              -> Root directory
+/home          -> User home directories
+/root          -> Home directory of root user
+/etc           -> Configuration files
+/var           -> Variable data, logs, application data
+/var/log       -> System and application logs
+/bin           -> Essential commands
+/sbin          -> System administration commands
+/usr           -> User applications and utilities
+/tmp           -> Temporary files
+/opt           -> Optional third-party software
+/dev           -> Device files
+/proc          -> Process and kernel information
+/sys           -> System and hardware information
+/mnt           -> Temporary mount point
+/boot          -> Boot-related files
+
+3. BASIC COMMANDS
+
+---
+
+pwd
+Shows the current working directory.
+
+ls
+Lists files and directories.
+
+ls -la
+Shows hidden files with detailed information.
+
+cd /path
+Changes directory.
+
+mkdir test
+Creates a directory.
+
+touch file.txt
+Creates an empty file.
+
+cp file.txt backup.txt
+Copies a file.
+
+mv file.txt /tmp/
+Moves a file.
+
+rm file.txt
+Deletes a file.
+
+rm -r directory
+Deletes a directory recursively.
+
+cat file.txt
+Displays file contents.
+
+less file.txt
+Views a large file page by page.
+
+head file.txt
+Shows the first lines.
+
+tail file.txt
+Shows the last lines.
+
+tail -f /var/log/syslog
+Continuously watches a log file.
+
+4. FILE PERMISSIONS
+
+---
+
+Linux permissions are divided into:
+
+User (u)
+Group (g)
+Others (o)
+
+Example:
+
+-rwxr-xr--
+
+Meaning:
+
+rwx -> User
+r-x -> Group
+r-- -> Others
+
+r = read
+w = write
+x = execute
+
+Numeric permissions:
+
+r = 4
+w = 2
+x = 1
+
+Examples:
+
+chmod 755 script.sh
+
+7 = rwx
+5 = r-x
+5 = r-x
+
+chmod 644 file.txt
+
+6 = rw-
+4 = r--
+4 = r--
+
+Important commands:
+
+chmod 755 file
+Changes permissions.
+
+chown user file
+Changes file owner.
+
+chgrp group file
+Changes group ownership.
+
+Interview Question:
+Why is chmod 777 generally avoided?
+
+Answer:
+Because it gives read, write and execute permissions to everyone. This can create security risks. We should follow the principle of least privilege.
+
+5. USERS AND GROUPS
+
+---
+
+whoami
+Shows the current user.
+
+id
+Shows user ID and group information.
+
+who
+Shows logged-in users.
+
+sudo command
+Runs a command with elevated privileges.
+
+su user
+Switches to another user.
+
+useradd username
+Creates a user.
+
+passwd username
+Changes the user's password.
+
+groupadd developers
+Creates a group.
+
+usermod -aG developers username
+Adds a user to a group.
+
+Important Interview Question:
+
+What is root?
+
+Answer:
+Root is the superuser in Linux. It has almost unrestricted access to the system.
+
+6. PROCESS MANAGEMENT
+
+---
+
+A process is a running instance of a program.
+
+ps
+Shows running processes.
+
+ps aux
+Shows detailed information about running processes.
+
+top
+Displays running processes and system resource usage.
+
+htop
+Interactive process monitoring tool.
+
+pgrep process_name
+Finds process IDs.
+
+kill PID
+Terminates a process.
+
+kill -9 PID
+Forcefully terminates a process.
+
+jobs
+Shows jobs running in the current shell.
+
+bg
+Moves a job to background.
+
+fg
+Brings a background job to foreground.
+
+Interview Question:
+What is the difference between kill and kill -9?
+
+Answer:
+kill normally sends SIGTERM, allowing the process to shut down gracefully.
+
+kill -9 sends SIGKILL and immediately terminates the process.
+
+7. SERVICES AND SYSTEMD
+
+---
+
+Modern Linux systems commonly use systemd to manage services.
+
+systemctl status nginx
+Checks service status.
+
+systemctl start nginx
+Starts the service.
+
+systemctl stop nginx
+Stops the service.
+
+systemctl restart nginx
+Restarts the service.
+
+systemctl enable nginx
+Starts nginx automatically during boot.
+
+systemctl disable nginx
+Prevents automatic startup.
+
+journalctl
+Displays systemd logs.
+
+journalctl -u nginx
+Shows logs for nginx.
+
+Interview Question:
+What would you check if NGINX is not working?
+
+Answer:
+
+1. Check service status.
+2. Check NGINX configuration.
+3. Check logs.
+4. Check whether the required port is listening.
+5. Check firewall/security-group rules.
+6. Check whether another process is using the port.
+
+Commands:
+
+systemctl status nginx
+nginx -t
+journalctl -u nginx
+ss -tulpn
+
+8. FILE SEARCHING
+
+---
+
+find
+Searches for files and directories.
+
+find /var/log -name "*.log"
+
+locate
+Quickly searches for files using an indexed database.
+
+which
+Shows the location of a command.
+
+which java
+
+whereis
+Shows locations related to a command.
+
+grep
+Searches text inside files.
+
+grep "ERROR" application.log
+
+grep -i "error" application.log
+Case-insensitive search.
+
+grep -r "ERROR" /var/log
+Searches recursively.
+
+Important combination:
+
+cat application.log | grep ERROR
+
+Better for large files:
+
+grep ERROR application.log
+
+9. DISK AND STORAGE
+
+---
+
+df -h
+Shows filesystem disk usage.
+
+du -sh directory
+Shows directory size.
+
+du -sh *
+Shows sizes of files/directories.
+
+lsblk
+Shows block devices.
+
+mount
+Shows mounted filesystems.
+
+mount /dev/sdb1 /mnt
+Mounts a filesystem.
+
+umount /mnt
+Unmounts a filesystem.
+
+Interview Question:
+What would you do if a Linux server's disk is full?
+
+Answer:
+
+1. Check disk usage using df -h.
+
+2. Find large directories using du.
+
+3. Check /var/log.
+
+4. Remove unnecessary files safely.
+
+5. Rotate/compress logs if required.
+
+6. Check application-generated files.
+
+7. Increase disk size if necessary.
+
+8. MEMORY AND CPU
+
+---
+
+free -h
+Shows memory usage.
+
+top
+Shows CPU and memory usage.
+
+uptime
+Shows system uptime and load average.
+
+vmstat
+Displays CPU, memory and system statistics.
+
+lscpu
+Displays CPU information.
+
+Interview Question:
+Server CPU is 100%. What will you do?
+
+Answer:
+
+1. Run top.
+
+2. Identify the process consuming CPU.
+
+3. Check application logs.
+
+4. Determine whether the load is expected.
+
+5. Investigate runaway processes.
+
+6. Restart the application only if appropriate.
+
+7. Check whether scaling is required.
+
+8. NETWORKING COMMANDS
+
+---
+
+ip addr
+Shows IP addresses.
+
+ip route
+Shows routing table.
+
+ping google.com
+Tests network connectivity.
+
+curl http://example.com
+Makes an HTTP request.
+
+wget URL
+Downloads content.
+
+ss -tulpn
+Shows listening network ports.
+
+nslookup example.com
+Performs DNS lookup.
+
+dig example.com
+Provides detailed DNS information.
+
+traceroute example.com
+Shows network path.
+
+hostname
+Shows hostname.
+
+hostname -I
+Shows IP address.
+
+12. IMPORTANT PORTS
+
+---
+
+22   -> SSH
+80   -> HTTP
+443  -> HTTPS
+53   -> DNS
+25   -> SMTP
+3306 -> MySQL
+5432 -> PostgreSQL
+8080 -> Common application/server port
+
+Interview Question:
+How do you check whether port 8080 is listening?
+
+Answer:
+
+ss -tulpn | grep 8080
+
+13. SSH
+
+---
+
+SSH means Secure Shell.
+
+It is used to securely connect to remote Linux servers.
+
+Basic command:
+
+ssh username@server_ip
+
+AWS example:
+
+ssh -i mykey.pem ubuntu@PUBLIC_IP
+
+Important:
+
+chmod 400 mykey.pem
+
+This restricts access to the private key.
+
+Common SSH troubleshooting:
+
+* Check server IP.
+* Check SSH service.
+* Check port 22.
+* Check firewall.
+* Check AWS Security Group.
+* Check username.
+* Check private-key permissions.
+
+14. LINUX FIREWALL
+
+---
+
+Ubuntu commonly uses UFW.
+
+ufw status
+Shows firewall status.
+
+ufw allow 22
+Allows SSH.
+
+ufw allow 80
+Allows HTTP.
+
+ufw allow 443
+Allows HTTPS.
+
+ufw deny 8080
+Blocks port 8080.
+
+Important:
+In AWS, Linux firewall rules and AWS Security Groups are different layers.
+
+Security Group -> AWS network-level access control
+UFW -> Host-level firewall
+
+15. ENVIRONMENT VARIABLES
+
+---
+
+Environment variables store configuration values.
+
+echo $PATH
+Displays PATH.
+
+printenv
+Displays environment variables.
+
+export APP_ENV=production
+Creates an environment variable for the current shell/session.
+
+Why important in Cloud/DevOps?
+
+Environment variables are commonly used for:
+
+* Application configuration
+* Database connection information
+* Environment selection
+* API configuration
+* CI/CD pipelines
+
+16. PACKAGE MANAGEMENT
+
+---
+
+Ubuntu/Debian:
+
+sudo apt update
+Updates package information.
+
+sudo apt install nginx
+Installs NGINX.
+
+sudo apt remove nginx
+Removes a package.
+
+sudo apt upgrade
+Upgrades installed packages.
+
+RHEL/Amazon Linux commonly use:
+
+dnf
+or
+yum
+
+Interview Question:
+What is the difference between apt update and apt upgrade?
+
+Answer:
+apt update refreshes the package repository information.
+
+apt upgrade installs newer versions of installed packages.
+
+17. LOGS
+
+---
+
+Logs are extremely important for troubleshooting.
+
+Important location:
+
+/var/log/
+
+Common commands:
+
+tail -f /var/log/syslog
+tail -f application.log
+journalctl
+journalctl -u nginx
+grep ERROR application.log
+
+Cloud Engineer troubleshooting approach:
+
+Application problem
+|
+v
+Check service
+|
+v
+Check logs
+|
+v
+Check CPU/Memory/Disk
+|
+v
+Check network
+|
+v
+Check configuration
+|
+v
+Fix and verify
+
+18. CRON JOBS
+
+---
+
+Cron is used to schedule tasks.
+
+crontab -e
+Edits scheduled jobs.
+
+Example:
+
+0 2 * * * /home/user/backup.sh
+
+Meaning:
+Run backup.sh every day at 2:00 AM.
+
+Common Cloud/DevOps use cases:
+
+* Backups
+* Log cleanup
+* Monitoring
+* Automated scripts
+* Database maintenance
+
+19. SHELL SCRIPTING
+
+---
+
+Shell scripting is important for automation.
+
+Example:
+
+#!/bin/bash
+
+echo "Starting deployment"
+
+sudo systemctl restart nginx
+
+echo "Deployment completed"
+
+Make executable:
+
+chmod +x deploy.sh
+
+Run:
+
+./deploy.sh
+
+Why important for Cloud Engineers?
+
+Shell scripts can automate:
+
+* Server setup
+* Deployment
+* Backup
+* Monitoring
+* Log cleanup
+* Package installation
+* Infrastructure tasks
+
+20. PROCESS VS THREAD
+
+---
+
+Process:
+
+* Independent running program.
+* Has its own memory space.
+* More expensive to create.
+
+Thread:
+
+* Smaller execution unit inside a process.
+* Threads share process memory.
+* Usually cheaper than processes.
+
+Interview Question:
+Why is this relevant to Cloud Engineers?
+
+Answer:
+Understanding processes and threads helps with performance analysis, resource management and troubleshooting applications running on cloud servers.
+
+21. HARD LINK VS SOFT LINK
+
+---
+
+Soft link:
+
+ln -s original.txt link.txt
+
+A soft link points to another file path.
+
+Hard link:
+
+ln original.txt hardlink.txt
+
+A hard link points to the same inode/data.
+
+Important difference:
+
+Soft link:
+
+* Has a separate inode.
+* Can point to directories.
+* Can cross filesystems.
+* Breaks if the target path is removed.
+
+Hard link:
+
+* Shares the same inode.
+* Normally cannot be used for directories.
+* Cannot cross filesystems.
+
+22. INODE
+
+---
+
+An inode stores metadata about a file.
+
+It contains information such as:
+
+* File permissions
+* Owner
+* Group
+* File size
+* Timestamps
+* Location of data blocks
+
+It does not normally store the filename itself.
+
+Command:
+
+ls -i
+
+Shows inode numbers.
+
+Interview Question:
+Can a server have free disk space but still fail to create files?
+
+Answer:
+Yes. The filesystem may have run out of inodes.
+
+Check using:
+
+df -i
+
+23. SYMBOLIC LINKS
+
+---
+
+Create:
+
+ln -s /var/www/html /home/user/website
+
+Check:
+
+ls -l
+
+Common Cloud/DevOps use:
+
+* Application versions
+* Configuration files
+* Deployment directories
+* Switching between releases
+
+24. SSH KEY AUTHENTICATION
+
+---
+
+SSH key authentication uses:
+
+Private Key -> kept securely by client
+Public Key  -> stored on server
+
+The private key should never be shared.
+
+Common file:
+
+~/.ssh/authorized_keys
+
+Contains public keys allowed to access the account.
+
+25. AWS + LINUX CONNECTION
+
+---
+
+Typical Cloud Engineer workflow:
+
+Developer
+|
+v
+GitHub
+|
+v
+CI/CD Pipeline
+|
+v
+AWS EC2
+|
+v
+Linux Server
+|
++--> NGINX
+|
++--> Application
+|
++--> Logs
+|
++--> Monitoring
+
+26. IMPORTANT AWS LINUX SCENARIO
+
+---
+
+Question:
+
+Your application is running on an EC2 Linux server, but users cannot access it.
+
+What will you check?
+
+Answer:
+
+1. Check EC2 instance status.
+2. SSH into the server.
+3. Check application status.
+4. Check NGINX status.
+5. Check listening ports.
+6. Check Linux firewall.
+7. Check AWS Security Group.
+8. Check application logs.
+9. Check NGINX logs.
+10. Test locally using curl.
+11. Check DNS.
+12. Check load balancer if present.
+
+Commands:
+
+systemctl status nginx
+ss -tulpn
+curl localhost
+df -h
+free -h
+top
+journalctl -u nginx
+
+27. IMPORTANT CLOUD TROUBLESHOOTING SCENARIO
+
+---
+
+Question:
+
+EC2 server is running but SSH connection is failing.
+
+Check:
+
+1. Is EC2 instance running?
+
+2. Is the correct public IP being used?
+
+3. Is port 22 allowed in Security Group?
+
+4. Is the Network ACL blocking traffic?
+
+5. Is the SSH service running?
+
+6. Is the correct username being used?
+
+7. Is the private key correct?
+
+8. Are private-key permissions correct?
+
+9. Is the instance reachable through the network?
+
+10. COMMON INTERVIEW QUESTIONS
+
+---
+
+Q1. What is Linux?
+
+Q2. Why is Linux widely used in cloud computing?
+
+Q3. What is the difference between Linux and Unix?
+
+Q4. What is a process?
+
+Q5. What is a thread?
+
+Q6. What is PID?
+
+Q7. How do you find a process?
+
+Q8. How do you kill a process?
+
+Q9. What is systemd?
+
+Q10. How do you restart a service?
+
+Q11. What is chmod?
+
+Q12. Explain 755 permissions.
+
+Q13. What is chown?
+
+Q14. What is sudo?
+
+Q15. What is SSH?
+
+Q16. How does SSH key authentication work?
+
+Q17. How do you check disk usage?
+
+Q18. How do you check memory usage?
+
+Q19. How do you check CPU usage?
+
+Q20. How do you check open ports?
+
+Q21. How do you troubleshoot a server?
+
+Q22. What is cron?
+
+Q23. What is a shell script?
+
+Q24. What is an environment variable?
+
+Q25. What is the difference between apt update and apt upgrade?
+
+Q26. What is the difference between soft link and hard link?
+
+Q27. What is an inode?
+
+Q28. Where are Linux logs stored?
+
+Q29. How do you troubleshoot NGINX?
+
+Q30. How do you troubleshoot an EC2 Linux server?
+
+29. MUST-KNOW COMMANDS FOR CLOUD ENGINEER
+
+---
+
+Navigation:
+pwd
+ls
+cd
+tree
+
+Files:
+touch
+cat
+less
+head
+tail
+cp
+mv
+rm
+
+Search:
+find
+grep
+locate
+which
+
+Permissions:
+chmod
+chown
+chgrp
+
+Processes:
+ps
+top
+htop
+kill
+pgrep
+
+Services:
+systemctl
+journalctl
+
+Networking:
+ip
+ping
+curl
+wget
+ss
+dig
+nslookup
+traceroute
+
+Storage:
+df
+du
+lsblk
+mount
+umount
+
+Users:
+whoami
+id
+who
+useradd
+usermod
+passwd
+groups
+
+Packages:
+apt
+dnf
+yum
+
+Automation:
+crontab
+bash
+sh
+
+SSH:
+ssh
+scp
+ssh-keygen
+
+30. INTERVIEW APPROACH
+
+---
+
+Do not just memorize commands.
+
+For every command, understand:
+
+1. What does it do?
+2. Why do we use it?
+3. What problem does it solve?
+4. What output does it give?
+5. What would you do if it shows an error?
+
+Example:
+
+Question:
+How do you troubleshoot high disk usage?
+
+Strong answer:
+
+"First I check the filesystem using df -h. Then I identify which directories are consuming the most space using du. I check /var/log and application-generated files, clean unnecessary data safely, and verify the disk usage again. If the workload genuinely requires more capacity, I would expand the storage."
+
+This type of answer demonstrates practical Cloud Engineer knowledge instead of only memorizing commands.
