@@ -1,0 +1,233 @@
+# 50 BASIC LINUX COMMANDS AND THEIR USES
+
+1. pwd
+   Use: Shows the current directory.
+   Example: pwd
+
+2. ls
+   Use: Shows files and folders.
+   Example: ls
+
+3. cd
+   Use: Changes the directory.
+   Example: cd /home
+
+4. mkdir
+   Use: Creates a new folder.
+   Example: mkdir project
+
+5. touch
+   Use: Creates a new file.
+   Example: touch file.txt
+
+6. cat
+   Use: Displays the content of a file.
+   Example: cat file.txt
+
+7. cp
+   Use: Copies a file or folder.
+   Example: cp file.txt backup.txt
+
+8. mv
+   Use: Moves or renames a file.
+   Example: mv old.txt new.txt
+
+9. rm
+   Use: Deletes a file.
+   Example: rm file.txt
+
+10. rmdir
+    Use: Deletes an empty folder.
+    Example: rmdir project
+
+11. clear
+    Use: Clears the terminal screen.
+    Example: clear
+
+12. history
+    Use: Shows previously used commands.
+    Example: history
+
+13. whoami
+    Use: Shows the current user.
+    Example: whoami
+
+14. date
+    Use: Shows the current date and time.
+    Example: date
+
+15. cal
+    Use: Shows the calendar.
+    Example: cal
+
+16. echo
+    Use: Prints text on the terminal.
+    Example: echo "Hello"
+
+17. man
+    Use: Shows the manual of a command.
+    Example: man ls
+
+18. head
+    Use: Shows the first lines of a file.
+    Example: head file.txt
+
+19. tail
+    Use: Shows the last lines of a file.
+    Example: tail file.txt
+
+20. grep
+    Use: Searches for text inside a file.
+    Example: grep "error" log.txt
+
+21. find
+    Use: Searches for files and folders.
+    Example: find /home -name file.txt
+
+22. chmod
+    Use: Changes file permissions.
+    Example: chmod 755 script.sh
+
+23. chown
+    Use: Changes file ownership.
+    Example: chown user file.txt
+
+24. sudo
+    Use: Runs a command with administrator permission.
+    Example: sudo apt update
+
+25. apt
+    Use: Installs and manages packages in Ubuntu/Debian.
+    Example: sudo apt install nginx
+
+26. ps
+    Use: Shows running processes.
+    Example: ps aux
+
+27. top
+    Use: Shows running processes and system usage.
+    Example: top
+
+28. kill
+    Use: Stops a running process.
+    Example: kill 1234
+
+29. df
+    Use: Shows disk space usage.
+    Example: df -h
+
+30. du
+    Use: Shows the size of files and folders.
+    Example: du -sh project
+
+31. free
+    Use: Shows RAM and memory usage.
+    Example: free -h
+
+32. uptime
+    Use: Shows how long the system has been running.
+    Example: uptime
+
+33. uname
+    Use: Shows system information.
+    Example: uname -a
+
+34. ip
+    Use: Shows and manages network information.
+    Example: ip addr
+
+35. ping
+    Use: Checks network connectivity.
+    Example: ping google.com
+
+36. ss
+    Use: Shows network connections and ports.
+    Example: ss -tulpn
+
+37. curl
+    Use: Sends requests to a URL or API.
+    Example: curl https://example.com
+
+38. wget
+    Use: Downloads files from the internet.
+    Example: wget https://example.com/file.zip
+
+39. ssh
+    Use: Connects to a remote Linux server.
+    Example: ssh user@server-ip
+
+40. scp
+    Use: Copies files between computers.
+    Example: scp file.txt user@server-ip:/home/user/
+
+41. tar
+    Use: Creates or extracts archive files.
+    Example: tar -xvf file.tar
+
+42. zip
+    Use: Creates a ZIP file.
+    Example: zip file.zip file.txt
+
+43. unzip
+    Use: Extracts a ZIP file.
+    Example: unzip file.zip
+
+44. nano
+    Use: Opens and edits a text file.
+    Example: nano file.txt
+
+45. history
+    Use: Shows previously executed commands.
+    Example: history
+
+46. which
+    Use: Shows the location of a command.
+    Example: which java
+
+47. env
+    Use: Shows environment variables.
+    Example: env
+
+48. export
+    Use: Creates or sets an environment variable.
+    Example: export JAVA_HOME=/usr/lib/jvm
+
+49. systemctl
+    Use: Starts, stops, restarts, or checks services.
+    Example: sudo systemctl status nginx
+
+50. journalctl
+    Use: Shows systemd service logs.
+    Example: sudo journalctl -u nginx
+
+# IMPORTANT COMMANDS FOR CLOUD/DEVOPS
+
+systemctl
+Use: Manage services.
+
+journalctl
+Use: Check service logs.
+
+tail -f
+Use: Monitor logs in real time.
+
+grep
+Use: Search errors in logs.
+
+df -h
+Use: Check disk space.
+
+free -h
+Use: Check RAM.
+
+ps aux
+Use: Check running processes.
+
+ss -tulpn
+Use: Check listening ports.
+
+top
+Use: Monitor system resources.
+
+ssh
+Use: Connect to a remote server.
