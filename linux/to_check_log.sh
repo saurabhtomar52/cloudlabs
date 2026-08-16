@@ -6,8 +6,8 @@ ERROR_LOG="/var/log/apache2/error.log"
 echo "===== WEBSITE LOG CHECK ====="
 
 echo
-echo "---- Last 20 Requests ----"
-tail -20 "$LOG_FILE"
+echo "---- Last 10 Requests ----"
+tail -10 "$LOG_FILE"
 
 echo
 echo "---- Recent Errors ----"
@@ -22,4 +22,3 @@ echo "---- 500 Errors ----"
 grep "500" "$LOG_FILE" | tail -10
 
 echo
-echo "===== CHECK COMPLETE ====="
