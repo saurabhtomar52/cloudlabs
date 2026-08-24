@@ -30,3 +30,279 @@ git log --oneline--graph--all
 git merge -s resolve resolvemerge> :wq
 git merge -s recursive brance_name
 
+
+GIT MERGE STRATEGIES - INTERVIEW NOTES
+======================================
+
+1. WHAT IS GIT MERGE?
+---------------------
+Git merge is used to combine changes from one branch into another branch.
+
+Example:
+
+main:    A---B---C
+              \
+feature:       D---E
+
+Command:
+
+git checkout main
+git merge feature
+
+
+2. TYPES OF MERGE
+-----------------
+
+A) FAST-FORWARD MERGE
+---------------------
+Used when the main branch has no new commits after the feature
+branch was created.
+
+Before:
+
+A---B---C
+         \
+          D---E   feature
+
+After:
+
+A---B---C---D---E
+
+Command:
+
+git merge feature
+
+No merge commit is created.
+
+
+B) THREE-WAY MERGE
+------------------
+Used when both branches have new commits.
+
+Before:
+
+        D---E   feature
+       /
+A---B---C---F---G   main
+
+Git finds the common ancestor B and combines changes from both
+branches.
+
+After:
+
+        D---E
+       /     \
+A---B---C---F---G---M
+
+M = Merge commit
+
+Command:
+
+git merge feature
+
+
+C) SQUASH MERGE
+---------------
+Combines multiple feature-branch commits into one commit.
+
+Before:
+
+A---B---C---D---E---F
+         feature commits
+
+After:
+
+A---B---C---S
+
+S = One combined commit
+
+Commands:
+
+git checkout main
+git merge --squash feature
+git commit -m "Add feature"
+
+Important:
+Squash merge does NOT create a normal merge commit.
+
+
+3. GIT MERGE STRATEGIES
+-----------------------
+
+A) RESOLVE
+----------
+An old Git merge strategy for merging two branches.
+
+Command:
+
+git merge -s resolve feature
+
+It finds the common ancestor and combines changes.
+
+Important:
+"resolve" is a merge strategy name.
+It does NOT mean resolving a merge conflict.
+
+
+B) RECURSIVE
+------------
+An older/default strategy for two-branch merges.
+
+Command:
+
+git merge -s recursive feature
+
+It was more capable than the old resolve strategy.
+
+It was commonly used before Git 2.34.
+
+
+C) ORT
+------
+ORT is the modern default strategy for normal two-branch merges.
+
+ORT = "Ostensibly Recursive's Twin"
+
+Command:
+
+git merge feature
+
+Normally Git automatically uses ORT.
+
+You can explicitly specify it:
+
+git merge -s ort feature
+
+ORT was introduced as the modern replacement for
+the recursive strategy and became the default in Git 2.34.
+
+
+D) OCTOPUS
+----------
+Used to merge multiple branches at the same time.
+
+Example:
+
+git merge feature1 feature2 feature3
+
+It is generally used when the branches can be merged
+without conflicts.
+
+
+E) OURS
+-------
+The "ours" strategy keeps the current branch's content and
+ignores the content from the other branch.
+
+Example:
+
+git merge -s ours feature
+
+Important:
+It records the merge relationship but keeps the current
+branch's tree/content.
+
+
+4. RESOLVE vs RECURSIVE vs ORT
+------------------------------
+
+Oldest/common progression:
+
+resolve
+   |
+   v
+recursive
+   |
+   v
+ort
+
+resolve   -> Old merge strategy
+recursive -> Older default for two branches
+ort       -> Modern default
+
+
+5. MERGE TYPES vs MERGE STRATEGIES
+----------------------------------
+
+Do NOT confuse these two concepts.
+
+MERGE TYPES:
+------------
+1. Fast-forward
+2. Three-way merge
+3. Squash merge
+
+MERGE STRATEGIES:
+-----------------
+1. resolve
+2. recursive
+3. ort
+4. octopus
+5. ours
+
+
+6. INTERVIEW QUICK REVISION
+---------------------------
+
+Q: What is Git merge?
+A: It combines changes from different branches.
+
+Q: What is fast-forward merge?
+A: Git simply moves the branch pointer forward. No merge
+   commit is created.
+
+Q: What is three-way merge?
+A: Git uses the common ancestor and the tips of both branches
+   to combine changes.
+
+Q: What is squash merge?
+A: It combines multiple commits into one commit.
+
+Q: What was the older default merge strategy before ORT?
+A: Recursive.
+
+Q: What is the modern default strategy?
+A: ORT.
+
+Q: When did ORT become the default?
+A: Git 2.34.
+
+Q: What is resolve?
+A: An older merge strategy for two branches.
+
+Q: What is octopus?
+A: A strategy for merging multiple branches at once.
+
+Q: Does squash merge create a normal merge commit?
+A: No.
+
+Q: Is "resolve" the same as resolving a merge conflict?
+A: No. Resolve is the name of a merge strategy.
+
+
+7. EASY MEMORY TRICK
+--------------------
+
+MERGE TYPES:
+
+Fast-forward -> Move pointer
+Three-way     -> Combine two diverged branches
+Squash        -> Many commits become one
+
+
+STRATEGIES:
+
+resolve   -> Old
+recursive -> Older default
+ort       -> Modern default
+octopus   -> Multiple branches
+ours      -> Keep current branch's content
+
+
+MOST IMPORTANT FOR INTERVIEWS:
+------------------------------
+
+resolve -> recursive -> ort
+
+recursive = old default
+ort       = modern default
